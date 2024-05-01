@@ -17,6 +17,8 @@ public partial class Order
 
     public int? Warehouse { get; set; }
 
+    public decimal? TotalPrice { get; set; }
+
     public virtual Customer IdCustomerNavigation { get; set; } = null!;
 
     public virtual ICollection<Orderlist> Orderlists { get; set; } = new List<Orderlist>();

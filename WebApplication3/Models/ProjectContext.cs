@@ -248,6 +248,9 @@ public partial class ProjectContext : DbContext
             entity.Property(e => e.DateOrder).HasColumnName("date_order");
             entity.Property(e => e.IdCustomer).HasColumnName("id_customer");
             entity.Property(e => e.StatusOrder).HasColumnName("status_order");
+            entity.Property(e => e.TotalPrice)
+                .HasPrecision(19, 2)
+                .HasColumnName("total_price");
             entity.Property(e => e.Warehouse).HasColumnName("warehouse");
 
             entity.HasOne(d => d.IdCustomerNavigation).WithMany(p => p.Orders)
@@ -311,7 +314,9 @@ public partial class ProjectContext : DbContext
             entity.Property(e => e.Color)
                 .HasMaxLength(150)
                 .HasColumnName("color");
-            entity.Property(e => e.Cost).HasColumnName("cost");
+            entity.Property(e => e.Cost)
+                .HasPrecision(19, 2)
+                .HasColumnName("cost");
             entity.Property(e => e.Description).HasColumnName("description");
             entity.Property(e => e.IdCategory).HasColumnName("id_category");
             entity.Property(e => e.IdProvider).HasColumnName("id_provider");
