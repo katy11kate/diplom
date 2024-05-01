@@ -15,6 +15,18 @@ namespace WebApplication3.Services
             return candidate != null;
         }
 
+        public Customer GetMe(string login)
+        {
+            var candidate = Database.Context.Customers.Where(c => c.Login == login).FirstOrDefault();
+
+            if (candidate == null)
+            {
+                throw new Exception("Пользователя с таким логином не найдено");
+            }
+
+            return candidate;
+        }
+
         public ClaimsIdentity GetIdentity(string username, string password)
         {
             Customer person = Database.Context.Customers.FirstOrDefault(x => x.Login == username && x.Password == password);
