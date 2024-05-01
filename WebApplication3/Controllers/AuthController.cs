@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Principal;
 using WebApplication3.ModelsDTO;
 using WebApplication3.Services;
@@ -35,7 +37,21 @@ namespace WebApplication3.Controllers
                     signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            return Ok(new AuthLoginDTO() { access_token = encodedJwt });
+            return Ok(new AuthLoginDTO() { access_token = encodedJwt, login = loginDTO.Login });
+        }
+
+        [HttpGet]
+        [Route("/me")]
+        public ActionResult<GetMeCustomerDTO> GetMe(string login)
+        {
+            if (string.IsNullOrEmpty(login))
+            {
+                return BadRequest("Логин отсутствует");
+            }
+
+            var me = _authService.GetMe(login);
+
+            return Ok(GetMeCustomerDTO.ConvertToGetMeCustomerDto(me));
         }
     }
 }
