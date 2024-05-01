@@ -19,7 +19,7 @@ public partial class Product
 
     public string? Description { get; set; }
 
-    public int? Cost { get; set; }
+    public decimal? Cost { get; set; }
 
     public string? Color { get; set; }
 

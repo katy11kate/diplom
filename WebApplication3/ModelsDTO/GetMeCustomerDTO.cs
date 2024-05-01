@@ -29,10 +29,19 @@ namespace WebApplication3.ModelsDTO
                 Telephone = me.Telephone,
                 Patronymic = me.Patronymic,
                 Name = me.Name,
-                Firstname = me.Firstname
+                Firstname = me.Firstname,
+                orders = GetMyOrders(me)
             };
         }
 
-        private static OrderGetMyOrders()
+        private static List<MyOrdersListDTO> GetMyOrders(Customer me)
+        {
+            var orders = new List<MyOrdersListDTO>();
+
+            foreach (var order in me.Orders)
+            {
+                order.Orderlists.
+            }
+        }
     }
 }

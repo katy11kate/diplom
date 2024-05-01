@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Principal;
 using WebApplication3.ModelsDTO;
 using WebApplication3.Services;
@@ -34,6 +35,22 @@ namespace WebApplication3.Controllers
                     expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
                     signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+            return Ok(new AuthLoginDTO() { access_token = encodedJwt });
+        }
+
+        [HttpGet]
+        [Route("/me")]
+        public ActionResult<AuthLoginDTO> GetMe()
+        {
+            var userLogin = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userLogin))
+            {
+                return BadRequest("Токен авторизации пуст");
+            }
+
+            var me = _authService.GetMe(userLogin);
 
             return Ok(new AuthLoginDTO() { access_token = encodedJwt });
         }
