@@ -1,4 +1,10 @@
 .vs
 
-./WebApplication3/bin/Debug/net7.0
-./WebApplication3/obj/Debug/net7.0
+./WebApplication3/bin/Debug
+./WebApplication3/obj/Debug
+
+TestProject2/bin
+TestProject1/bin
+
+TestProject2/obj
+TestProject1/obj
