@@ -24,7 +24,26 @@ namespace WebApplication3.Controllers
 
             return Ok(result);
         }
+        [Route("/consignement/{id_sklad}")]
+        [HttpGet]
+        public ActionResult<List<ConsignmentDTO>> list2(int id_sklad)
+        {
 
+            var result = new List<ConsignmentDTO>();
+            var sklads = Database.Context.Consignments.ToList().Where(x => x.Warehouse==id_sklad);
+
+
+            if (sklads != null)
+            {
+                foreach (var sklad in sklads)
+                {
+                    result.Add(ConsignmentDTO.ConsigConverter(sklad));
+                }
+
+                return Ok(result);
+            }
+            else { return NotFound("no"); }
+        }
 
 
         [HttpGet]

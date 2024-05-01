@@ -45,7 +45,7 @@ namespace WebApplication3.Controllers
             {
                 var product = ctx.Products.Where(x => x.IdProduct == paycheck.productId).FirstOrDefault();
 
-                int? totalprice = product.Cost * paycheck.quantity;
+                decimal? totalprice = product.Cost * paycheck.quantity;
                 paragraph.AddFormattedText(product.NameProduct+" "+product.Size + " " + product.Color + " " + product.Cost.ToString() + " " + totalprice.ToString()+ "\n");
             }
             paragraph.AddText("\r\n");

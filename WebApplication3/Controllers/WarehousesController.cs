@@ -14,7 +14,7 @@ namespace WebApplication3.Controllers
             return Database.Context.Warehouses.ToList();
         }
 
-        [Route("/warehouses/:id")]
+        [Route("/warehouses/id")]
         [HttpGet]
         public ActionResult<Warehouse> GetWarehouseById([FromQuery] int id)
         {
