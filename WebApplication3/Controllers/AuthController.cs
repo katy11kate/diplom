@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -36,23 +37,21 @@ namespace WebApplication3.Controllers
                     signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            return Ok(new AuthLoginDTO() { access_token = encodedJwt });
+            return Ok(new AuthLoginDTO() { access_token = encodedJwt, login = loginDTO.Login });
         }
 
         [HttpGet]
         [Route("/me")]
-        public ActionResult<AuthLoginDTO> GetMe()
+        public ActionResult<GetMeCustomerDTO> GetMe(string login)
         {
-            var userLogin = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            if (string.IsNullOrEmpty(userLogin))
+            if (string.IsNullOrEmpty(login))
             {
-                return BadRequest("Токен авторизации пуст");
+                return BadRequest("Логин отсутствует");
             }
 
-            var me = _authService.GetMe(userLogin);
+            var me = _authService.GetMe(login);
 
-            return Ok(new AuthLoginDTO() { access_token = encodedJwt });
+            return Ok(GetMeCustomerDTO.ConvertToGetMeCustomerDto(me));
         }
     }
 }

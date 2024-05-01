@@ -10,7 +10,7 @@ namespace WebApplication3.ModelsDTO
         public string Color { get; set; }
         public string Size { get; set; }
         public string Description { get; set; }
-        public int? Cost { get; set; }
+        public decimal? Cost { get; set; }
         public List<string> Images { get; set; }
             
         public static ProductDTO ProductResponseConverter(Product product)

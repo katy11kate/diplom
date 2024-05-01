@@ -13,7 +13,7 @@ namespace WebApplication3.ModelsDTO
 
             public int? count { get; set; }
 
-            public int? price { get; set; }
+            public decimal? price { get; set; }
         public string color { get; set; }
 
 

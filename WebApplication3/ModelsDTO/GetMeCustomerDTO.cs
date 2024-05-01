@@ -40,8 +40,34 @@ namespace WebApplication3.ModelsDTO
 
             foreach (var order in me.Orders)
             {
-                order.Orderlists.
+                orders.Add(
+                    new MyOrdersListDTO() 
+                    { 
+                        DateDelivery = order.DateDelivery, 
+                        DateOrder = order.DateOrder, 
+                        Price = order.TotalPrice ?? 0,
+                        ProductsInfo = GetMyProductDetailsInfo(order)
+                    }
+                );
             }
+
+            return orders;
+        }
+
+        private static List<ProductDetailsInfo> GetMyProductDetailsInfo(Order order)
+        {
+            var products = new List<ProductDetailsInfo>();
+
+            foreach (var orderlist in order.Orderlists)
+            {
+                products.Add(new ProductDetailsInfo()
+                {
+                    Product = ProductDTO.ProductResponseConverter(orderlist.IdProductNavigation),
+                    Amount = orderlist.Count ?? 0,
+                });
+            }
+
+            return products;
         }
     }
 }
